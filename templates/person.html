@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>RPi facerec</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.min.css') }}">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md">
+        <div class="container-fluid"><a class="navbar-brand" href="#">DoorBell</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/">Live</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="people">People</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="people">Unknown</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="settings">Advanced</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="log">Log</a></li>
+                    <li class="nav-item" role="presentation"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Info</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    {% for row in person %}
+                    <div class="col"><img class="mug" src="{{ row['image_loc'] }}"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="id">ID</label></div>
+                        <div class="col"><input class="form-control" type="text" id="id-1" value="{{ person[0]['person_id'] }}" readonly=""></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="name">Name</label></div>
+                        <div class="col"><input class="form-control" type="text" id="name" name="Name" placeholder="Name" value="{{ person[0]['name'] }}"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="trusted">Trusted</label></div>
+                        <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="{{ person[0]['trusted'] }}">&nbsp;<span class="slider round"></span></label></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="announce">Announce</label></div>
+                        <div class="col"><textarea class="form-control" id="announce" name="announce" placeholder="Announce">{{ person[0]['announce'] }}</textarea></div>
+                    </div>
+                    {% for row in person %}
+                    <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="imageloc">Image location</label></div>
+                        <div class="col"><input class="form-control" type="text" id="imageloc" disabled="" value="{{ row['image_loc'] }}"></div>
+                    </div>
+                    {% endfor %}
+                    <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="lastseen">Last seen</label></div>
+                        <div class="col"><input class="form-control" type="text" id="lastseen" disabled="" value="{{ log[0]['datetime'] }}"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <p class="text-danger">Check to delete</p>
+                        </div>
+                        <div class="col text-left align-self-center"><label class="switch"><input type="checkbox" name="del0"><span class="slider round" style="/*background-color: red;*/"></span></label><label class="switch"><input type="checkbox" name="del1"><span class="slider round"></span></label>
+                            <label
+                                class="switch"><input type="checkbox" name="del2"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del3"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del4"><span class="slider round"></span></label></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col"><button class="btn btn-danger" type="button">Delete</button></div>
+                        <div class="col"><a class="btn btn-warning" role="button" href="people">Cancel</a></div>
+                        <div class="col"><button class="btn btn-success" type="submit">Update</button></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="id">Add to person with ID</label></div>
+                        <div class="col"><input class="form-control" type="text" id="addtoid" value="156"></div>
+                        <div class="col"><button class="btn btn-primary" type="button">Add</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="log">
+        <div class="row">
+            <div class="col">
+                <h1>Log</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in log %}
+                            <tr>
+                                <td>{{ row['datetime'] }}</td>
+                                <td onclick="window.location='/person/{{ row['id'] }}'">{{ row['name'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

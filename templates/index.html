@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>RPi facerec</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.min.css') }}">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md">
+        <div class="container-fluid"><a class="navbar-brand" href="#">DoorBell</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/">Live</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="people">People</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="people">Unknown</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="settings">Advanced</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="log">Log</a></li>
+                    <li class="nav-item" role="presentation"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container text-center"><img src="{{ url_for('static', filename='assets/img/Donald%20Trump-930ca84e-c6ac-11ea-80a4-3085a9a7fdd0.JPG') }}"></div>
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>
