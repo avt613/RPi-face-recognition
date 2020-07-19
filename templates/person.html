@@ -44,10 +44,10 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form>
+                <form action="/person/update" method="post">
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">ID</label></div>
-                        <div class="col"><input class="form-control" type="text" id="id-1" value="{{ person[0]['person_id'] }}" readonly=""></div>
+                        <div class="col"><input class="form-control" type="text" id="id" value="{{ person[0]['person_id'] }}" readonly=""></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="name">Name</label></div>
@@ -80,9 +80,9 @@
                                 class="switch"><input type="checkbox" name="del2"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del3"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del4"><span class="slider round"></span></label></div>
                     </div>
                     <div class="form-row">
-                        <div class="col"><button class="btn btn-danger" type="button">Delete</button></div>
-                        <div class="col"><a class="btn btn-warning" role="button" href="people">Cancel</a></div>
                         <div class="col"><button class="btn btn-success" type="submit">Update</button></div>
+                        <div class="col"><a class="btn btn-warning" role="button" href="people">Cancel</a></div>
+                        <div class="col"><button class="btn btn-danger" type="submit" formaction="/person/delete">Delete</button></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">Add to person with ID</label></div>
