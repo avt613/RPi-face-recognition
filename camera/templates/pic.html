@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Faces</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/assets/css/styles.css') }}">
+</head>
+
+<body>
+    <section>
+        <form action="/post" method="post">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-center">Face Recognition Training</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <p style="margin-bottom: 0;"><strong>{{ random }}</strong></p><img src="static/assets/img/{{ random }}">
+                    <input class="form-control" hidden name="picid" value="{{ picid }}">
+                    <input class="form-control" hidden name="picpath" value="{{ picpath }}"></div>
+            </div>
+            {% for row in cut_faces %}
+            {% if row[1] != "none" %}
+            <div class="form-row">
+                <div class="col l-col"><img class="mug" src="static/assets/img/{{ row[0] }}">
+                    <input class="form-control" hidden type="text" name="image_{{ row[2] }}_cut" value="{{ row[0] }}"></div>
+                <div class="col align-self-center r-col">
+                    <p>I am:</p><input class="form-control" type="text" id="image_{{ row[2] }}_name" name="image_{{ row[2] }}_name" placeholder="{{ row[1] }}">
+                        <input class="form-control" hidden type="text" name="image_{{ row[2] }}_name_orig" value="{{ row[1] }}">
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="form-row">
+                <input class="form-control" hidden name="length" value="{{ length }}">
+                <div class="col text-center"><button class="btn btn-primary" type="submit" style="width: inherit;max-width: 600px;">Submit - Next</button></div>
+            </div>
+        </form>
+        <div class="form-row">
+            <div class="col text-center"><a class="btn btn-primary" style="width: inherit;max-width: 600px; margin-top:20px; margin-bottom:20px;" role="button" href="/">Home</a></div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <a class="github-button" href="https://github.com/avt613" data-size="large" aria-label="Follow @avt613 on GitHub">Follow @avt613</a>
+            </div>
+        </div>
+    </section>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+img {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: initial;
+}
+
+section {
+  max-width: 99%;
+}
+
+input {
+  max-width: 300px;
+}
+
+.col.r-col {
+  padding-left: initial;
+}
+
+.col.l-col {
+  text-align: right;
+}
+
+.mug {
+  max-height: 300px;
+}
+
+.row {
+  margin: auto;
+}
+

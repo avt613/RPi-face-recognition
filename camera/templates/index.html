@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Faces</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/assets/css/styles.css') }}">
+</head>
+
+<body>
+    <section style="align:center;">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">Face Recognition Training</h1>
+            </div>
+        </div>
+        <div class="row" style="max-width:900px;text-align:center;">
+            <div class="col">
+                <p>I am trying to make a face recognition program to recognise everyone's faces in the Isreal tour photos.<br>Please help by teaching the program everyone's names. <br></p>
+                <p style="background-color: #212529;color: #ffffff;border-radius: 5px;">On every page an image will be shown at the top of the page.<br>Below there may be 1 or more cut out faces. Some will have the correct names next to the while some may not.<br>If the correct name shown, just continue.
+                    <br>If the name is incorrect  or "Unknown", correct it.<br>If you are not sure or want to skip that one, leave the input box blank.<br>If there is no face in the picture enter "none".</p>
+                <p>As the program is looking through the high quality photos for faces on each page load, it can take as much as 30 seconds for the page to load.<br>If there are any errors/ sugestions contact me.<br>A.Travers</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center"><a class="btn btn-primary" role="button" href="/pic">Go</a></div>
+        </div>
+        <div class="row" style="padding-top:10px;">
+            <div class="col text-center">
+                <a class="github-button" href="https://github.com/avt613" data-size="large" aria-label="Follow @avt613 on GitHub">Follow @avt613</a>
+            </div>
+        </div>
+    </section>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>
