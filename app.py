@@ -1,5 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
 from config import *
+import os
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -82,7 +83,7 @@ def search_people(search):
 #--------------------------------
 @app.route("/person/<person_id>")
 def person_page(person_id):
-    person = db.execute("SELECT * FROM people LEFT JOIN faces ON people.id=person_id WHERE people.id LIKE ? GROUP BY people.id", person_id)
+    person = db.execute("select * from people join faces on people.id = faces.person_id where people.id = ?", person_id)
     log = db.execute("SELECT * FROM log LEFT JOIN people ON person_id = people.id WHERE person_id LIKE ? OR datetime IN (SELECT datetime FROM log WHERE person_id LIKE ?) ORDER BY datetime DESC",person_id ,person_id)
     return render_template("/person.html", person=person, log=log)
 
@@ -94,13 +95,14 @@ def person_delete():
     del3 = request.form.get("del3")
     del4 = request.form.get("del4")
     person_id = request.form.get("id")
-    if del0 == del1 == del2 == del3 == del4 == True:
+    if del0 == del1 == del2 == del3 == del4 == 'True':
         faces = db.execute("SELECT image_loc FROM faces WHERE person_id=?", person_id)
-        for image in faces:
-            os.remove(image)
+        for i in range(len(faces)):
+            os.remove(faces[i]['image_loc'])
         db.execute("DELETE FROM faces WHERE person_id=?", person_id)
+        db.execute("DELETE FROM log WHERE person_id=?", person_id)
         db.execute("DELETE FROM people WHERE id=?", person_id)
-        return redirect("/people.html/")
+        return redirect("/people")
     return redirect("/person/" + str(person_id))
 
 @app.route("/person/deleteface", methods=["POST"])
@@ -117,17 +119,17 @@ def person_delete_face():
 def person_update():
     person_id = request.form.get("id")
     name = request.form.get("name")
-    trusted = request.form.get("trusted")
+    trusted = str(request.form.get("trusted"))
     announce = request.form.get("announce")
     db.execute("UPDATE people SET name=?, trusted=?, announce=? WHERE id=?",name ,trusted ,announce ,person_id)
     return redirect("/person/" + str(person_id))
 
 @app.route("/person/addto", methods=["POST"])
 def person_addto():
-    person_id = request.form.get("person_id")
+    person_id = request.form.get("id")
     addtoid = request.form.get("addtoid")
     db.execute("UPDATE faces SET person_id=? WHERE person_id=?", addtoid, person_id)
-    db.execute("DELETE FROM people person_id=?", person_id)
+    db.execute("DELETE FROM people WHERE id=?", person_id)
     return redirect("/person/" + str(addtoid))
 #--------------------------------
 

@@ -44,7 +44,7 @@
         <div class="row row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-5 row-cols-xl-5">
             {% for row in people %}
             <div class="col" onclick="window.location='/person/{{ row['id'] }}'">
-                <p>{{ row['name'] }}</p><img class="mugicon" src="{{ row['image_loc'] }}"></div>
+                <p>{{ row['name'] }}</p><img class="mugicon" src="/{{ row['image_loc'] }}"></div>
             {% endfor %}
         </div>
     </div>

@@ -36,7 +36,7 @@
                 {% for row in settings %}
                 <form action="/settings/update" method="post">
                     <div class="form-row">
-                        <div class="col-auto"><input class="form-control" type="text" name="id" value="{{ row['id'] }}" placeholder="ID" readonly=""></div>
+                        <div><input class="form-control" type="text" name="id" value="{{ row['id'] }}" placeholder="ID" readonly="" hidden></div>
                         <div class="col-auto"><input class="form-control" type="text" name="name" value="{{ row['name'] }}" placeholder="name"></div>
                         <div class="col-auto"><input class="form-control" type="text" name="value" value="{{ row['value'] }}" placeholder="value"></div>
                         <div class="col-auto"><button class="btn btn-success" type="submit">Update</button></div>
