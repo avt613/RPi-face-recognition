@@ -11,15 +11,15 @@
 
 <body>
     <nav class="navbar navbar-light navbar-expand-md">
-        <div class="container-fluid"><a class="navbar-brand" href="#">DoorBell</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container-fluid"><a class="navbar-brand" href="/">DoorBell</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse"
                 id="navcol-1">
                 <ul class="nav navbar-nav">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/">Live</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="people">People</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="people">Unknown</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="settings">Advanced</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="log">Log</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/">Live</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/people">People</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/people/search/unknown">Unknown</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/settings">Advanced</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/log">Log</a></li>
                     <li class="nav-item" role="presentation"></li>
                 </ul>
             </div>
@@ -47,15 +47,15 @@
                 <form action="/person/update" method="post">
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">ID</label></div>
-                        <div class="col"><input class="form-control" type="text" id="id" value="{{ person[0]['person_id'] }}" readonly=""></div>
+                        <div class="col"><input class="form-control" type="text" id="id" name="id" value="{{ person[0]['person_id'] }}" readonly=""></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="name">Name</label></div>
-                        <div class="col"><input class="form-control" type="text" id="name" name="Name" placeholder="Name" value="{{ person[0]['name'] }}"></div>
+                        <div class="col"><input class="form-control" type="text" id="name" name="name" placeholder="Name" value="{{ person[0]['name'] }}"></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="trusted">Trusted</label></div>
-                        <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="{{ person[0]['trusted'] }}">&nbsp;<span class="slider round"></span></label></div>
+                        <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="True">&nbsp;<span class="slider round"></span></label></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="announce">Announce</label></div>
@@ -75,13 +75,13 @@
                         <div class="col">
                             <p class="text-danger">Check to delete</p>
                         </div>
-                        <div class="col text-left align-self-center"><label class="switch"><input type="checkbox" name="del0"><span class="slider round" style="/*background-color: red;*/"></span></label><label class="switch"><input type="checkbox" name="del1"><span class="slider round"></span></label>
+                        <div class="col text-left align-self-center"><label class="switch"><input type="checkbox" name="del0"  value="True"><span class="slider round" style="/*background-color: red;*/"></span></label><label class="switch"><input type="checkbox" name="del1" value="True"><span class="slider round"></span></label>
                             <label
-                                class="switch"><input type="checkbox" name="del2"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del3"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del4"><span class="slider round"></span></label></div>
+                                class="switch"><input type="checkbox" name="del2" value="True"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del3" value="True"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del4" value="True"><span class="slider round"></span></label></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><button class="btn btn-success" type="submit">Update</button></div>
-                        <div class="col"><a class="btn btn-warning" role="button" href="people">Cancel</a></div>
+                        <div class="col"><a class="btn btn-warning" role="reset" href="/people">Cancel</a></div>
                         <div class="col"><button class="btn btn-danger" type="submit" formaction="/person/delete">Delete</button></div>
                     </div>
                     <div class="form-row">
@@ -122,6 +122,11 @@
             </div>
         </div>
     </div>
+    <script>
+        if ("{{ person[0]['trusted'] }}" == "True"){
+            document.getElementById("trusted").checked = true;
+        }
+    </script>
     <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
 </body>
