@@ -45,6 +45,7 @@
         <div class="row">
             <div class="col">
                 <form action="/person/update" method="post">
+                    <button type="submit" hidden></button>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">ID</label></div>
                         <div class="col"><input class="form-control" type="text" id="id" name="id" value="{{ person[0]['person_id'] }}" readonly=""></div>
@@ -64,7 +65,7 @@
                     {% for row in person %}
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="imageloc">Image location</label></div>
-                        <div class="col"><input class="form-control" type="text" id="imageloc" disabled="" value="{{ row['image_loc'] }}"></div>
+                        <div class="col"><input class="form-control" type="text" id="imageloc" disabled="" value="{{ row['image_loc'] }}"><button class="btn btn-danger" type="submit" formaction="/person/deleteface" name="face" value="{{ row['image_loc'] }}">Delete</button></div>
                     </div>
                     {% endfor %}
                     <div class="form-row">
@@ -86,8 +87,8 @@
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">Add to person with ID</label></div>
-                        <div class="col"><input class="form-control" type="text" id="addtoid" value="156"></div>
-                        <div class="col"><button class="btn btn-primary" type="button">Add</button></div>
+                        <div class="col"><input class="form-control" type="text" id="addtoid" placeholder="ID"></div>
+                        <div class="col"><button class="btn btn-primary" type="submit"  formaction="/person/addto">Add</button></div>
                     </div>
                 </form>
             </div>

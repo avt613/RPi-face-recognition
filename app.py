@@ -103,6 +103,16 @@ def person_delete():
         return redirect("/people.html/")
     return redirect("/person/" + str(person_id))
 
+@app.route("/person/deleteface", methods=["POST"])
+def person_delete_face():
+    person_id = request.form.get("id")
+    face = request.form.get("face")
+    faces = db.execute("SELECT count(image_loc) AS count FROM faces WHERE person_id=?", person_id)
+    if faces[0]['count'] > 1:
+        os.remove(face)
+        db.execute("DELETE FROM faces WHERE image_loc=?", face)
+    return redirect("/person/" + str(person_id))
+
 @app.route("/person/update", methods=["POST"])
 def person_update():
     person_id = request.form.get("id")
@@ -111,5 +121,13 @@ def person_update():
     announce = request.form.get("announce")
     db.execute("UPDATE people SET name=?, trusted=?, announce=? WHERE id=?",name ,trusted ,announce ,person_id)
     return redirect("/person/" + str(person_id))
+
+@app.route("/person/addto", methods=["POST"])
+def person_addto():
+    person_id = request.form.get("person_id")
+    addtoid = request.form.get("addtoid")
+    db.execute("UPDATE faces SET person_id=? WHERE person_id=?", addtoid, person_id)
+    db.execute("DELETE FROM people person_id=?", person_id)
+    return redirect("/person/" + str(addtoid))
 #--------------------------------
 
