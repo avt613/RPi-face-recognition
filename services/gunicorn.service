@@ -1,0 +1,12 @@
+[Unit]
+Description=Guinicorn web server
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/facerec
+ExecStart=/home/pi/.local/bin/gunicorn app:app -b 0.0.0.0 --reload
+Restart=never
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=facial recognition
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/facerec
+ExecStart=python3 camera.py
+Restart=never
+
+[Install]
+WantedBy=multi-user.target
