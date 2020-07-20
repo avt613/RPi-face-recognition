@@ -35,7 +35,7 @@
             <div class="col">
                 <div class="row">
                     {% for row in person %}
-                    <div class="col"><img class="mug" src="{{ row['image_loc'] }}"></div>
+                    <div class="col"><p>{{ row['image_loc'] }}</p><img class="mug" src="/{{ row['image_loc'] }}"></div>
                     {% endfor %}
                 </div>
             </div>
@@ -56,7 +56,14 @@
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="trusted">Trusted</label></div>
-                        <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="True">&nbsp;<span class="slider round"></span></label></div>
+                        <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="True" onclick="
+if(document.getElementById('trusted').checked == true){
+document.getElementById('trusted').value = 'False';
+}else{
+document.getElementById('trusted').value = 'True';
+}
+
+">&nbsp;<span class="slider round"></span></label></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="announce">Announce</label></div>
@@ -87,7 +94,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">Add to person with ID</label></div>
-                        <div class="col"><input class="form-control" type="text" id="addtoid" placeholder="ID"></div>
+                        <div class="col"><input class="form-control" type="text" id="addtoid" name="addtoid" placeholder="ID"></div>
                         <div class="col"><button class="btn btn-primary" type="submit"  formaction="/person/addto">Add</button></div>
                     </div>
                 </form>
