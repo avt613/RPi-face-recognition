@@ -37,7 +37,11 @@
                 <div class="col">
                     <div class="row">
                         {% for row in person %}
-                        <div class="col"><img class="mug" src="/{{ row['image_loc'] }}"><p><button class="btn btn-danger" type="submit" formaction="/person/deleteface" name="face" value="{{ row['image_loc'] }}">Delete</button></p></div>
+                            <div class="col"><img class="mug" src="/{{ row['image_loc'] }}">
+                            {% if person[1] %}
+                            <p><button class="btn btn-danger" type="submit" formaction="/person/deleteface" name="face" value="{{ row['image_loc'] }}">Delete</button></p>
+                            {% endif %}
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -85,11 +89,13 @@
                         <div class="col"><a class="btn btn-warning" role="reset" href="/people">Cancel</a></div>
                         <div class="col"><button class="btn btn-success" type="submit">Update</button></div>
                     </div>
+                    {% if not person[1] %}
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">Add to person with ID</label></div>
                         <div class="col"><input class="form-control" type="text" id="addtoid" name="addtoid" placeholder="ID"></div>
                         <div class="col"><button class="btn btn-primary" type="submit"  formaction="/person/addto">Add</button></div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -113,7 +119,7 @@
                         <tbody>
                             {% for row in log %}
                             <tr>
-                                <td>{{ row['datetime'] }}</td>
+                                <td onclick="window.location='/log/search/{{ row['datetime'] }}/'">{{ row['datetime'] }}</td>
                                 <td onclick="window.location='/person/{{ row['id'] }}'">{{ row['name'] }}</td>
                             </tr>
                             {% endfor %}
