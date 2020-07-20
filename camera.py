@@ -31,7 +31,7 @@ while True:
 
     # Loop over each face found in the frame to see if it's someone we know.
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
-        match = face_recognition.compare_faces(known_face_encoding, face_encoding, tolerance=0.5)
+        match = face_recognition.compare_faces(known_face_encoding, face_encoding, tolerance=float(tolerance))
         face_distances = face_recognition.face_distance(known_face_encoding, face_encoding)
         best_match_index = np.argmin(face_distances)
         if match[best_match_index]:
@@ -51,9 +51,9 @@ while True:
         #if same name within 9 seconds ignore
         timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         recent = set()
-        for i in range(10):
+        for i in range(int(timedelay)):
             recent.add((datetime.now() - timedelta(seconds=i)).strftime("%Y-%m-%d %H:%M:%S"))
-        if not (tempname == name and temptimestamp in temptimestamp):
+        if not (tempname == name and temptimestamp in recent):
             db.execute('INSERT INTO log ("person_id", "datetime", "distance") VALUES(?, ?, ?)',person_id, timestamp, float(face_distances[best_match_index]))
             print(name, timestamp, float(face_distances[best_match_index]))
             tempname = name
