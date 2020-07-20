@@ -60,7 +60,7 @@ def log_page():
     if not input2:
         input2 = ""
     datetime = '%' + input2 + '%'
-    log = db.execute("SELECT * FROM log LEFT JOIN people ON person_id = people.id WHERE (name LIKE ? OR datetime LIKE ?) AND (name LIKE ? OR datetime LIKE ?) ORDER BY datetime DESC",name, name, datetime, datetime)
+    log = db.execute("SELECT * FROM log JOIN people ON person_id = people.id WHERE (name LIKE ? OR datetime LIKE ?) AND (name LIKE ? OR datetime LIKE ?) ORDER BY datetime DESC",name, name, datetime, datetime)
     return render_template("/log.html", log=log)
 
 @app.route("/log/search/<data>/")
@@ -99,9 +99,9 @@ def person_delete():
         faces = db.execute("SELECT image_loc FROM faces WHERE person_id=?", person_id)
         for i in range(len(faces)):
             os.remove(faces[i]['image_loc'])
-        db.execute("DELETE FROM faces WHERE person_id=?", person_id)
-        db.execute("DELETE FROM log WHERE person_id=?", person_id)
-        db.execute("DELETE FROM people WHERE id=?", person_id)
+        db.execute("DELETE FROM faces WHERE person_id=?", int(person_id))
+        db.execute("DELETE FROM log WHERE person_id=?", int(person_id))
+        db.execute("DELETE FROM people WHERE id=?", int(person_id))
         return redirect("/people")
     return redirect("/person/" + str(person_id))
 
@@ -129,6 +129,7 @@ def person_addto():
     person_id = request.form.get("id")
     addtoid = request.form.get("addtoid")
     db.execute("UPDATE faces SET person_id=? WHERE person_id=?", addtoid, person_id)
+    db.execute("UPDATE log SET person_id=? WHERE person_id=?", addtoid, person_id)
     db.execute("DELETE FROM people WHERE id=?", person_id)
     return redirect("/person/" + str(addtoid))
 #--------------------------------
