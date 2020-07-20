@@ -25,27 +25,27 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Info</h1>
+    <form action="/person/update" method="post">
+        <button type="submit" hidden></button>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1>Info</h1>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="row">
-                    {% for row in person %}
-                    <div class="col"><p>{{ row['image_loc'] }}</p><img class="mug" src="/{{ row['image_loc'] }}"></div>
-                    {% endfor %}
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        {% for row in person %}
+                        <div class="col"><img class="mug" src="/{{ row['image_loc'] }}"><p><button class="btn btn-danger" type="submit" formaction="/person/deleteface" name="face" value="{{ row['image_loc'] }}">Delete</button></p></div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <form action="/person/update" method="post">
-                    <button type="submit" hidden></button>
+        <div class="container">
+            <div class="row">
+                <div class="col">
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">ID</label></div>
                         <div class="col"><input class="form-control" type="text" id="id" name="id" value="{{ person[0]['person_id'] }}" readonly=""></div>
@@ -65,7 +65,7 @@
                     {% for row in person %}
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="imageloc">Image location</label></div>
-                        <div class="col"><input class="form-control" type="text" id="imageloc" disabled="" value="{{ row['image_loc'] }}"><button class="btn btn-danger" type="submit" formaction="/person/deleteface" name="face" value="{{ row['image_loc'] }}">Delete</button></div>
+                        <div class="col"><input class="form-control" type="text" id="imageloc" disabled="" value="{{ row['image_loc'] }}"></div>
                     </div>
                     {% endfor %}
                     <div class="form-row">
@@ -90,10 +90,10 @@
                         <div class="col"><input class="form-control" type="text" id="addtoid" name="addtoid" placeholder="ID"></div>
                         <div class="col"><button class="btn btn-primary" type="submit"  formaction="/person/addto">Add</button></div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
     <div class="container" id="log">
         <div class="row">
             <div class="col">
