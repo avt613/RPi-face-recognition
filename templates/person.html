@@ -56,14 +56,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="trusted">Trusted</label></div>
-                        <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="True" onclick="
-if(document.getElementById('trusted').checked == true){
-document.getElementById('trusted').value = 'False';
-}else{
-document.getElementById('trusted').value = 'True';
-}
-
-">&nbsp;<span class="slider round"></span></label></div>
+                        <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="True">&nbsp;<span class="slider round"></span></label></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="announce">Announce</label></div>
@@ -88,9 +81,9 @@ document.getElementById('trusted').value = 'True';
                                 class="switch"><input type="checkbox" name="del2" value="True"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del3" value="True"><span class="slider round"></span></label><label class="switch"><input type="checkbox" name="del4" value="True"><span class="slider round"></span></label></div>
                     </div>
                     <div class="form-row">
-                        <div class="col"><button class="btn btn-success" type="submit">Update</button></div>
-                        <div class="col"><a class="btn btn-warning" role="reset" href="/people">Cancel</a></div>
                         <div class="col"><button class="btn btn-danger" type="submit" formaction="/person/delete">Delete</button></div>
+                        <div class="col"><a class="btn btn-warning" role="reset" href="/people">Cancel</a></div>
+                        <div class="col"><button class="btn btn-success" type="submit">Update</button></div>
                     </div>
                     <div class="form-row">
                         <div class="col"><label class="col-form-label" for="id">Add to person with ID</label></div>

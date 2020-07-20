@@ -32,7 +32,7 @@ def db_settings_add(key, value):
 
 def db_person_add(name):
     newid = db.execute("SELECT max(id) AS max FROM people")[0]['max'] + 1
-    db.execute("INSERT INTO people VALUES(?, ?, False, ?)",newid, name, default_announce)
+    db.execute("INSERT INTO people VALUES(?, ?, 'False', ?)",newid, name, default_announce)
     return newid
 
 def db_face_add(person_id, image_loc, face_encodings):
