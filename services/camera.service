@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=pi
-WorkingDirectory=/home/pi/facerec
+WorkingDirectory=/home/pi/RPi-face-recognition
 ExecStart=python3 camera.py
 Restart=never
 

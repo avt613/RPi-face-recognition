@@ -29,7 +29,8 @@ def settings_update():
     setting_id = request.form.get("id")
     setting_name = request.form.get("name")
     setting_value = request.form.get("value")
-    settings = db.execute("UPDATE settings SET name=?, value=? WHERE id=?", setting_name, setting_value, setting_id)
+    setting_notes = request.form.get("notes")
+    settings = db.execute("UPDATE settings SET name=?, value=?, notes=? WHERE id=?", setting_name, setting_value, setting_notes, setting_id)
     exec(setting_name + " = setting_value")
     return redirect("/settings")
 
@@ -38,17 +39,37 @@ def settings_delete():
     setting_id = request.form.get("id")
     setting_name = request.form.get("name")
     settings = db.execute("DELETE FROM settings WHERE id=?", setting_id)
-    exec("del " + setting_name)
+    #exec("del " + setting_name)
     return redirect("/settings")
 
 @app.route("/settings/new", methods=["POST"])
 def settings_new():
     setting_name = request.form.get("name")
     setting_value = request.form.get("value")
-    settings = db.execute("INSERT INTO settings VALUES(NULL, ?, ?)", setting_name, setting_value)
+    setting_notes = request.form.get("notes")
+    settings = db.execute("INSERT INTO settings VALUES(NULL, ?, ?, ?)", setting_name, setting_value, setting_notes)
     exec(setting_name + " = setting_value")
     return redirect("/settings")
 
+@app.route("/settings/restart_camera", methods=["POST"])
+def settings_restart_camera():
+    os.system(restart_camera)
+    return redirect("/settings")
+
+@app.route("/settings/restart_gunicorn", methods=["POST"])
+def settings_restart_gunicorn():
+    os.system(restart_gunicorn)
+    return redirect("/settings")
+
+@app.route("/settings/restart_pi", methods=["POST"])
+def settings_restart_pi():
+    os.system("sudo reboot now")
+    return redirect("/settings")
+
+@app.route("/settings/halt_pi", methods=["POST"])
+def settings_halt_pi():
+    os.system("sudo halt")
+    return redirect("/settings")
 #--------------------------------
 @app.route("/log", methods=["GET", "POST"])
 def log_page():
@@ -84,7 +105,7 @@ def search_people(search):
 @app.route("/person/<person_id>")
 def person_page(person_id):
     person = db.execute("select * from people join faces on people.id = faces.person_id where people.id = ?", person_id)
-    log = db.execute("SELECT * FROM log LEFT JOIN people ON person_id = people.id WHERE person_id LIKE ? OR datetime IN (SELECT datetime FROM log WHERE person_id LIKE ?) ORDER BY datetime DESC",person_id ,person_id)
+    log = db.execute("SELECT * FROM log JOIN people ON person_id = people.id WHERE person_id LIKE ? OR datetime IN (SELECT datetime FROM log WHERE person_id LIKE ?) ORDER BY datetime DESC",person_id ,person_id)
     return render_template("/person.html", person=person, log=log)
 
 @app.route("/person/delete", methods=["POST"])
@@ -132,5 +153,11 @@ def person_addto():
     db.execute("UPDATE log SET person_id=? WHERE person_id=?", addtoid, person_id)
     db.execute("DELETE FROM people WHERE id=?", person_id)
     return redirect("/person/" + str(addtoid))
+
+@app.route("/person/fix", methods=["POST"])
+def person_fix():
+    person_id = request.form.get("id")
+    db.execute("INSERT INTO log (person_id) VALUES(?)", int(person_id))
+    return redirect("/person/" + str(person_id))
 #--------------------------------
 

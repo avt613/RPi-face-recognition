@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=pi
-WorkingDirectory=/home/pi/facerec
+WorkingDirectory=/home/pi/RPi-face-recognition
 ExecStart=/home/pi/.local/bin/gunicorn app:app -b 0.0.0.0 --reload
 Restart=never
 

@@ -48,12 +48,16 @@ while True:
             face.close()
             person_id = db_person_add(name)
             db_face_add(person_id, image_loc, face_encoding)
+            link = webaddress+ 'person/' + str(person_id)
+            telegram_send_button('New Person seen', 'ID: ' + person_id, link)
         #if same name within 9 seconds ignore
         timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         recent = set()
         for i in range(int(timedelay)):
             recent.add((datetime.now() - timedelta(seconds=i)).strftime("%Y-%m-%d %H:%M:%S"))
         if not (tempname == name and temptimestamp in recent):
+            if televeryperson == 'True':
+                telegram_send_text('I can see: ' + name)
             db.execute('INSERT INTO log ("person_id", "datetime", "distance") VALUES(?, ?, ?)',person_id, timestamp, float(face_distances[best_match_index]))
             print(name, timestamp, float(face_distances[best_match_index]))
             tempname = name

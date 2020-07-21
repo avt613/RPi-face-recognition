@@ -1,10 +1,26 @@
 from cs50 import SQL
 db = SQL('sqlite:///faces.db')
-
 query = db.execute("SELECT * FROM settings ORDER BY id")
 for i in range(len(query)):
     exec(query[i]['name'] + " = query[i]['value']")
 
+#--------telegram
+import telepot
+bot = telepot.Bot(telegramtoken)
+
+from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+def telegram_send_button(title, text, link):
+    markup = InlineKeyboardMarkup(inline_keyboard=[
+                [dict(text=text, url=link)],
+                [InlineKeyboardButton(text='Callback - Done', callback_data='delete')],
+             ])
+    global telegram_message
+    telegram_message = bot.sendMessage(telegramid, title, reply_markup=markup, disable_notification=telegramsilent)
+
+def telegram_send_text(text):
+    bot.sendMessage(telegramid, text, disable_notification=telegramsilent)
+
+#----------------
 def dbget():
     ids = []
     names = []
