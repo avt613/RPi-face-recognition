@@ -17,11 +17,12 @@ def after_request(response):
 @app.route("/")
 def index_page():
     return render_template("/index.html")
+    return redirect("/log")
 
 #--------------------------------
 @app.route("/settings")
 def settings_page():
-    settings = db.execute("SELECT * FROM settings ORDER BY id ASC")
+    settings = db.execute("SELECT * FROM settings ORDER BY name ASC")
     return render_template("/settings.html", settings=settings)
 
 @app.route("/settings/update", methods=["POST"])
@@ -69,6 +70,20 @@ def settings_restart_pi():
 @app.route("/settings/halt_pi", methods=["POST"])
 def settings_halt_pi():
     os.system("sudo halt")
+    return redirect("/settings")
+
+@app.route("/settings/start_camera", methods=["POST"])
+def settings_start_camera():
+    os.system(stop_live)
+    os.system(restart_camera)
+    telegram_send_button('Face Recognition Activated', 'Launch', webaddress + ':' + str(webport))
+    return redirect("/settings")
+
+@app.route("/settings/start_live", methods=["POST"])
+def settings_start_live():
+    os.system(stop_camera)
+    os.system(start_live)
+    telegram_send_button('Live Stream Activated', 'Launch', webaddress)
     return redirect("/settings")
 #--------------------------------
 @app.route("/log", methods=["GET", "POST"])

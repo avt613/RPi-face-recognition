@@ -9,13 +9,24 @@ import telepot
 bot = telepot.Bot(telegramtoken)
 
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
+
 def telegram_send_button(title, text, link):
     markup = InlineKeyboardMarkup(inline_keyboard=[
                 [dict(text=text, url=link)],
-                [InlineKeyboardButton(text='Callback - Done', callback_data='delete')],
+#                [InlineKeyboardButton(text='Callback - Done', callback_data='delete')],
              ])
     global telegram_message
     telegram_message = bot.sendMessage(telegramid, title, reply_markup=markup, disable_notification=telegramsilent)
+
+def telegram_send_photobutton(text, link, image_loc):
+    markup = InlineKeyboardMarkup(inline_keyboard=[
+                [dict(text=text, url=link)],
+             ])
+    global telegram_message
+    telegram_message = bot.sendPhoto(telegramid, photo=open(image_loc, 'rb'), reply_markup=markup, disable_notification=telegramsilent)
+
+def telegram_send_photo(image_loc):
+    bot.sendPhoto(telegramid, photo=open(image_loc, 'rb'), disable_notification=telegramsilent)
 
 def telegram_send_text(text):
     bot.sendMessage(telegramid, text, disable_notification=telegramsilent)
@@ -27,6 +38,7 @@ def dbget():
     trusted = []
     announce = []
     encodings = []
+    locs = []
     query = db.execute("select * from people join faces on people.id = faces.person_id ORDER BY name")
 
     for i in range(len(query)):
@@ -34,11 +46,12 @@ def dbget():
         names.append(query[i]['name'])
         trusted.append(query[i]['trusted'])
         announce.append(query[i]['announce'])
+        locs.append(query[i]['image_loc'])
         encodings.append([])
         # Loop from 0 to 127 (128 iterations in total)
         for j in range(128):
             encodings[i].append(query[i][str(j)])
-    return ids, names, trusted, announce, encodings
+    return ids, names, trusted, announce, encodings, locs
 
 #--------------------------------
 
