@@ -53,6 +53,16 @@
                 </div>
                 <div class="form-row">
                     <div class="col-auto">
+                        <form action="/settings/start_camera" method="post"><button class="btn btn-danger" type="submit">Start Camera Service</button>
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <form action="/settings/start_live" method="post"><button class="btn btn-danger" type="submit">Start Live Feed Service</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-auto">
                         <form action="/person/fix" method="post">
                             <div class="form-row">
                                 <div class="col-auto"><input class="form-control" type="text" name="id" placeholder="ID"></div>
