@@ -1,7 +1,7 @@
 # Web streaming example
 # Source code from the official PiCamera package
 # http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
-
+from config import rotation
 import io
 import picamera
 import logging
@@ -84,7 +84,7 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
     output = StreamingOutput()
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
-    camera.rotation = 90
+    camera.rotation = rotation
     camera.start_recording(output, format='mjpeg')
     try:
         address = ('', 80)
