@@ -1,0 +1,12 @@
+[Unit]
+Description=live camera feed
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/RPi-face-recognition
+ExecStart=python3 live.py
+Restart=never
+
+[Install]
+WantedBy=multi-user.target
