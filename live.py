@@ -1,7 +1,7 @@
 # Web streaming example
 # Source code from the official PiCamera package
 # http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
-from config import rotation
+from configs.config import rotation
 import io
 import picamera
 import logging
