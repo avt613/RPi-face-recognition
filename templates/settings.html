@@ -31,36 +31,81 @@
                 <h1>Advanced Settings</h1>
             </div>
         </div>
+        <div class="table-responsive table-borderless">
+            <table class="table table-bordered table-sm">
+                <tbody>
+                    <tr>
+                        <td>
+                            <form action="/settings/restart/camera" method="post">
+                                <button class="btn btn-success" type="submit">(Re)Start Camera</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/restart/gunicorn" method="post">
+                                <button class="btn btn-success" type="submit">(Re)Start Gunicorn</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/restart/keypad" method="post">
+                                <button class="btn btn-success" type="submit">(Re)Start Keypad</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/restart/live" method="post">
+                                <button class="btn btn-success" type="submit">(Re)Start Live</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/restart/fan" method="post">
+                                <button class="btn btn-success" type="submit">(Re)Start Fan</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/restart/pi" method="post">
+                                <button class="btn btn-success" type="submit">Restart Pi</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form action="/settings/stop/camera" method="post">
+                                <button class="btn btn-danger" type="submit">Stop Camera</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/stop/gunicorn" method="post">
+                                <button class="btn btn-danger" type="submit">Stop Gunicorn</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/stop/keypad" method="post">
+                                <button class="btn btn-danger" type="submit">Stop Keypad</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/stop/live" method="post">
+                                <button class="btn btn-danger" type="submit">Stop Live</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/stop/fan" method="post">
+                                <button class="btn btn-danger" type="submit">Stop Fan</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/settings/stop/pi" method="post">
+                                <button class="btn btn-danger" type="submit">Shutdown Pi</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+        
         <div class="row">
             <div class="col">
-                <div class="form-row">
-                    <div class="col-auto">
-                        <form action="/settings/restart_camera" method="post"><button class="btn btn-danger" type="submit">Restart Camera Service</button>
-                        </form>
-                    </div>
-                    <div class="col-auto">
-                        <form action="/settings/restart_gunicorn" method="post"><button class="btn btn-danger" type="submit">Restart Gunicorn Service</button>
-                        </form>
-                    </div>
-                    <div class="col-auto">
-                        <form action="/settings/restart_pi" method="post"><button class="btn btn-danger" type="submit">Restart Pi</button>
-                        </form>
-                    </div>
-                    <div class="col-auto">
-                        <form action="/settings/halt_pi" method="post"><button class="btn btn-danger" type="submit">Shutdown Pi</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-auto">
-                        <form action="/settings/start_camera" method="post"><button class="btn btn-danger" type="submit">Start Camera Service</button>
-                        </form>
-                    </div>
-                    <div class="col-auto">
-                        <form action="/settings/start_live" method="post"><button class="btn btn-danger" type="submit">Start Live Feed Service</button>
-                        </form>
-                    </div>
-                </div>
                 <div class="form-row">
                     <div class="col-auto">
                         <form action="/person/fix" method="post">
