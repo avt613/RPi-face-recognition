@@ -63,6 +63,10 @@
                         <div class="col text-left"><label class="col-form-label switch"><input type="checkbox" id="trusted" name="trusted" value="True">&nbsp;<span class="slider round"></span></label></div>
                     </div>
                     <div class="form-row">
+                        <div class="col"><label class="col-form-label" for="pin">PIN</label></div>
+                        <div class="col"><input class="form-control" type="number" id="pin" name="pin" placeholder="PIN" value="{{ person[0]['pin'] }}"></div>
+                    </div>
+                    <div class="form-row">
                         <div class="col"><label class="col-form-label" for="announce">Announce</label></div>
                         <div class="col"><textarea class="form-control" id="announce" name="announce" placeholder="Announce">{{ person[0]['announce'] }}</textarea></div>
                     </div>
