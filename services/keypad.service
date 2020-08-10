@@ -1,10 +1,11 @@
 [Unit]
-Description=live camera feed
+Description=keypad
+After=camera.service
 
 [Service]
 User=pi
 WorkingDirectory=/home/pi/RPi-face-recognition
-ExecStart=sudo python3 live.py
+ExecStart=python3 keypad.py
 Restart=never
 
 [Install]
