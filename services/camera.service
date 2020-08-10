@@ -1,6 +1,5 @@
 [Unit]
 Description=facial recognition
-After=network.target
 
 [Service]
 User=pi

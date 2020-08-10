@@ -1,7 +1,9 @@
 import face_recognition
 import picamera
 import numpy as np
-from config import *
+from configs.config import rotation, db, televeryperson
+from configs.dbfunctions import *
+from configs.telegram import *
 from PIL import Image, ImageDraw
 from datetime import timedelta, datetime
 import uuid
@@ -31,7 +33,8 @@ def photoproc(face_locations, output):
     face_encodings = face_recognition.face_encodings(output, face_locations)
     faces = Image.fromarray(output)
     temp = faces.save('static/temp.JPG')
-    telegram_send_photo('static/temp.JPG')
+    if televeryperson == 'True':
+        telegram_send_photo('static/temp.JPG')
     # Loop over each face found in the frame to see if it's someone we know.
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         match = face_recognition.compare_faces(known_face_encoding, face_encoding, tolerance=float(tolerance))
@@ -52,17 +55,23 @@ def photoproc(face_locations, output):
             face.close()
             person_id = db_person_add(name)
             db_face_add(person_id, image_loc, face_encoding)
+            known_face_ids.append(person_id)
+            known_face_names.append(name)
+            #trusted.append(False)
+            #announce.append()
+            known_face_encoding.append(face_encoding)
+            known_face_locs.append(image_loc)
 
         #if same name within 9 seconds ignore
         timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         recent = set()
         for i in range(int(timedelay)):
             recent.add((datetime.now() - timedelta(seconds=i)).strftime("%Y-%m-%d %H:%M:%S"))
-        if not (temptimestamp in recent and tempname == name):
-        #    if televeryperson == 'True':
+        if not (temptimestamp in recent and tempname == name) and televeryperson == 'True':
             link = webaddress + ':' + str(webport) + '/person/' + str(person_id)
             telegram_send_button('ID: ' + str(person_id) + '\n' + 'NAME: ' + name, 'Open', link)
         temptimestamp = timestamp
+        tempname = name
 
         db.execute('INSERT INTO log ("person_id", "datetime", "distance") VALUES(?, ?, ?)',person_id, timestamp, float(face_distances[best_match_index]))
         print(name, timestamp, float(face_distances[best_match_index]))
