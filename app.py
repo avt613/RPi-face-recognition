@@ -1,5 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
-from config import *
+from configs.services import *
+from configs.config import db
 import os
 
 app = Flask(__name__)
@@ -40,7 +41,6 @@ def settings_delete():
     setting_id = request.form.get("id")
     setting_name = request.form.get("name")
     settings = db.execute("DELETE FROM settings WHERE id=?", setting_id)
-    #exec("del " + setting_name)
     return redirect("/settings")
 
 @app.route("/settings/new", methods=["POST"])
@@ -52,19 +52,16 @@ def settings_new():
     exec(setting_name + " = setting_value")
     return redirect("/settings")
 
-@app.route("/settings/restart_camera", methods=["POST"])
-def settings_restart_camera():
-    os.system(restart_camera)
-    return redirect("/settings")
-
-@app.route("/settings/restart_gunicorn", methods=["POST"])
-def settings_restart_gunicorn():
-    os.system(restart_gunicorn)
-    return redirect("/settings")
-
-@app.route("/settings/restart_pi", methods=["POST"])
-def settings_restart_pi():
-    os.system("sudo reboot now")
+@app.route("/settings/restart/<service>", methods=["POST"])
+def settings_restart(service):
+    if service == 'pi':
+        os.system("sudo reboot now")
+    else:
+        if service == 'camera':
+            stop_service('live')
+        elif service == 'live':
+            stop_service('camera')
+        restart_service(service)
     return redirect("/settings")
 
 @app.route("/settings/halt_pi", methods=["POST"])
@@ -72,19 +69,14 @@ def settings_halt_pi():
     os.system("sudo halt")
     return redirect("/settings")
 
-@app.route("/settings/start_camera", methods=["POST"])
-def settings_start_camera():
-    os.system(stop_live)
-    os.system(restart_camera)
-    telegram_send_button('Face Recognition Activated', 'Launch', webaddress + ':' + str(webport))
+@app.route("/settings/stop/<service>", methods=["POST"])
+def settings_stop(service):
+    if service == 'pi':
+        os.system("sudo halt")
+    else:
+        stop_service(service)
     return redirect("/settings")
 
-@app.route("/settings/start_live", methods=["POST"])
-def settings_start_live():
-    os.system(stop_camera)
-    os.system(start_live)
-    telegram_send_button('Live Stream Activated', 'Launch', webaddress)
-    return redirect("/settings")
 #--------------------------------
 @app.route("/log", methods=["GET", "POST"])
 def log_page():
@@ -157,7 +149,8 @@ def person_update():
     name = request.form.get("name")
     trusted = str(request.form.get("trusted"))
     announce = request.form.get("announce")
-    db.execute("UPDATE people SET name=?, trusted=?, announce=? WHERE id=?",name ,trusted ,announce ,person_id)
+    pin = request.form.get("pin")
+    db.execute("UPDATE people SET name=?, trusted=?, announce=?, pin=? WHERE id=?",name ,trusted ,announce, pin ,person_id)
     return redirect("/person/" + str(person_id))
 
 @app.route("/person/addto", methods=["POST"])
