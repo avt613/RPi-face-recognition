@@ -1,35 +1,5 @@
-from cs50 import SQL
-db = SQL('sqlite:///faces.db')
-query = db.execute("SELECT * FROM settings ORDER BY id")
-for i in range(len(query)):
-    exec(query[i]['name'] + " = query[i]['value']")
-
-#--------telegram
-import telepot
-bot = telepot.Bot(telegramtoken)
-
-from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
-
-def telegram_send_button(title, text, link):
-    markup = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=text, url=link)],
-#                [InlineKeyboardButton(text='Callback - Done', callback_data='delete')],
-             ])
-    global telegram_message
-    telegram_message = bot.sendMessage(telegramid, title, reply_markup=markup, disable_notification=telegramsilent)
-
-def telegram_send_photobutton(text, link, image_loc):
-    markup = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=text, url=link)],
-             ])
-    global telegram_message
-    telegram_message = bot.sendPhoto(telegramid, photo=open(image_loc, 'rb'), reply_markup=markup, disable_notification=telegramsilent)
-
-def telegram_send_photo(image_loc):
-    bot.sendPhoto(telegramid, photo=open(image_loc, 'rb'), disable_notification=telegramsilent)
-
-def telegram_send_text(text):
-    bot.sendMessage(telegramid, text, disable_notification=telegramsilent)
+from configs.config import db
+from configs.telegram import *
 
 #----------------
 def dbget():
@@ -52,16 +22,12 @@ def dbget():
         for j in range(128):
             encodings[i].append(query[i][str(j)])
     return ids, names, trusted, announce, encodings, locs
-
-#--------------------------------
-
-def db_settings_add(key, value):
-    db.execute("INSERT INTO settings (name, value) VALUES(?, ?)", key, value)
-    exec(key + " = " + value) 
-
+    
 def db_person_add(name):
     newid = db.execute("SELECT max(id) AS max FROM people")[0]['max'] + 1
-    db.execute("INSERT INTO people VALUES(?, ?, 'False', ?)",newid, name, default_announce)
+    db.execute("INSERT INTO people VALUES(?, ?, 'False', ?, '')",newid, name, default_announce)
+    link = webaddress + ':' + str(webport) + '/person/' + str(person_id)
+    telegram_send_photobutton('[New Person] ID: ' + str(newid), link, 'static/temp.JPG')
     return newid
 
 def db_face_add(person_id, image_loc, face_encodings):
@@ -195,3 +161,4 @@ def db_face_add(person_id, image_loc, face_encodings):
         face_encodings[126].item(),\
         face_encodings[127].item())
 
+#---------------------------------
