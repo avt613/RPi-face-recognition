@@ -31,72 +31,60 @@
                 <h1>Advanced Settings</h1>
             </div>
         </div>
-        <div class="table-responsive table-borderless">
+        <div class="table-responsive">
             <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <td>
+                            Pi
+                        </td>
+                        {% for service in services_list %}
+                            <td>
+                                {{ service }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <form action="/settings/restart/camera" method="post">
-                                <button class="btn btn-success" type="submit">(Re)Start Camera</button>
+                            <form action="/settings/restart/all" method="post">
+                                <button style="width:100%;" class="btn btn-success" type="submit">Restart All</button>
                             </form>
                         </td>
-                        <td>
-                            <form action="/settings/restart/gunicorn" method="post">
-                                <button class="btn btn-success" type="submit">(Re)Start Gunicorn</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/settings/restart/keypad" method="post">
-                                <button class="btn btn-success" type="submit">(Re)Start Keypad</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/settings/restart/live" method="post">
-                                <button class="btn btn-success" type="submit">(Re)Start Live</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/settings/restart/fan" method="post">
-                                <button class="btn btn-success" type="submit">(Re)Start Fan</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/settings/restart/pi" method="post">
-                                <button class="btn btn-success" type="submit">Restart Pi</button>
-                            </form>
-                        </td>
+                        {% for service in service_status %}
+                            <td {% if service == "NOT Active" %} class="bg-danger" {% else %} class="bg-success" {% endif %}>
+                                {{ service }}
+                            </td>
+                        {% endfor %}
                     </tr>
                     <tr>
                         <td>
-                            <form action="/settings/stop/camera" method="post">
-                                <button class="btn btn-danger" type="submit">Stop Camera</button>
+                            <form action="/settings/restart/pi" method="post">
+                                <button style="width:100%;" class="btn btn-success" type="submit">Restart</button>
                             </form>
                         </td>
-                        <td>
-                            <form action="/settings/stop/gunicorn" method="post">
-                                <button class="btn btn-danger" type="submit">Stop Gunicorn</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/settings/stop/keypad" method="post">
-                                <button class="btn btn-danger" type="submit">Stop Keypad</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/settings/stop/live" method="post">
-                                <button class="btn btn-danger" type="submit">Stop Live</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="/settings/stop/fan" method="post">
-                                <button class="btn btn-danger" type="submit">Stop Fan</button>
-                            </form>
-                        </td>
+                        {% for service in services_list %}
+                            <td>
+                                <form action="/settings/restart/{{ service }}" method="post">
+                                    <button style="width:100%;" class="btn btn-success" type="submit">(Re)Start</button>
+                                </form>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
                         <td>
                             <form action="/settings/stop/pi" method="post">
-                                <button class="btn btn-danger" type="submit">Shutdown Pi</button>
+                                <button style="width:100%;" class="btn btn-danger" type="submit">Shutdown</button>
                             </form>
                         </td>
+                        {% for service in services_list %}
+                            <td>
+                                <form action="/settings/stop/{{ service }}" method="post">
+                                    <button style="width:100%;" class="btn btn-danger" type="submit">Stop</button>
+                                </form>
+                            </td>
+                        {% endfor %}
                     </tr>
                 </tbody>
             </table>
