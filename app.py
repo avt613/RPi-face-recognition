@@ -1,7 +1,9 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
 from configs.services import *
-from configs.config import db
+from configs.config import db, webaddress, webport
 import os
+from configs.telegram import telegram_send_button
+telegram_send_button('System Online', 'Open', webaddress + ':' + str(webport))
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -19,12 +21,17 @@ def after_request(response):
 def index_page():
     return render_template("/index.html")
     return redirect("/log")
-
 #--------------------------------
 @app.route("/settings")
 def settings_page():
     settings = db.execute("SELECT * FROM settings ORDER BY name ASC")
-    return render_template("/settings.html", settings=settings)
+    service_status = []
+    for i in range(len(services_list)):
+        if service_active(services_list[i]):
+            service_status.append('Active')
+        else:
+            service_status.append('NOT Active')
+    return render_template("/settings.html", settings=settings, services_list=services_list, service_status=service_status)
 
 @app.route("/settings/update", methods=["POST"])
 def settings_update():
@@ -56,6 +63,11 @@ def settings_new():
 def settings_restart(service):
     if service == 'pi':
         os.system("sudo reboot now")
+    elif service == 'all':
+    
+        for service in services_list.pop(services_list.index('live')):
+            restart_service(service)
+        services_list.append('live')
     else:
         if service == 'camera':
             stop_service('live')
