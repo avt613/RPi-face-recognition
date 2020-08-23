@@ -1,4 +1,4 @@
-from configs.config import db
+from configs.config import *
 from configs.telegram import *
 
 #----------------
@@ -26,7 +26,7 @@ def dbget():
 def db_person_add(name):
     newid = db.execute("SELECT max(id) AS max FROM people")[0]['max'] + 1
     db.execute("INSERT INTO people VALUES(?, ?, 'False', ?, '')",newid, name, default_announce)
-    link = webaddress + ':' + str(webport) + '/person/' + str(person_id)
+    link = webaddress + ':' + str(webport) + '/person/' + str(newid)
     telegram_send_photobutton('[New Person] ID: ' + str(newid), link, 'static/temp.JPG')
     return newid
 
