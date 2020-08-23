@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import time
+from time import sleep
 
 relay_pin_1 = 6
 relay_pin_2 = 13
@@ -12,7 +12,15 @@ def door_open(unlock_time):
     GPIO.output(relay_pin_1,GPIO.HIGH)
     GPIO.output(relay_pin_2,GPIO.LOW)
     print('Door unlocked')
-    time.sleep(unlock_time)
+    sleep(unlock_time)
     GPIO.output(relay_pin_1,GPIO.LOW)
     GPIO.output(relay_pin_2,GPIO.HIGH)
     print('Door locked')
+    
+def door_status():
+    if GPIO.input(relay_pin_1) == GPIO.LOW and GPIO.input(relay_pin_2) == GPIO.HIGH:
+        return "LOCKED"
+    elif GPIO.input(relay_pin_1) == GPIO.HIGH and GPIO.input(relay_pin_2) == GPIO.LOW:
+        return "UNLOCKED"
+    else:
+        return "Something went wrong"
