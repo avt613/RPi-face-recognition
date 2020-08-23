@@ -1,6 +1,6 @@
 [Unit]
 Description=keypad
-After=camera.service
+After=network.target
 
 [Service]
 User=pi

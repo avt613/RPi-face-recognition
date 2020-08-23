@@ -1,5 +1,6 @@
 [Unit]
 Description=live camera feed
+After=network.target
 
 [Service]
 User=pi
