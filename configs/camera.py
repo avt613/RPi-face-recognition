@@ -1,5 +1,6 @@
-from configs.config import db
+from configs.config import db, timedelay
 from datetime import timedelta, datetime
+from time import sleep
 
 def checkcamera(checkid):
     for i in range(int(timedelay)):
@@ -14,5 +15,5 @@ def checkcamera(checkid):
             last_ids.append(int(person['person_id']))
         if int(checkid) in last_ids:
             return True
-        time.sleep(0.5)          
+        sleep(0.5)          
     return False

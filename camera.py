@@ -1,7 +1,7 @@
 import face_recognition
 import picamera
 import numpy as np
-from configs.config import rotation, db, televeryperson
+from configs.config import *
 from configs.dbfunctions import *
 from configs.telegram import *
 from PIL import Image, ImageDraw
@@ -45,7 +45,7 @@ def photoproc(face_locations, output):
             person_id = known_face_ids[best_match_index]
             image_loc = known_face_locs[best_match_index]
         else:
-            unique = uuid.uuid1()
+            unique = uuid.uuid4()
             name = "Unknown-" + str(unique)
             extrawidth = 0.2*(right - left)
             extraheight = 0.2*(bottom - top)
