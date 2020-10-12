@@ -11,3 +11,4 @@ def get_ip_address():
     return s.getsockname()[0]
 
 webaddress = 'http://' + get_ip_address()
+#webaddress = 'http://192.168.1.38'

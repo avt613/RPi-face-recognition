@@ -1,4 +1,4 @@
-from configs.config import telegramtoken, telegramid, telegramsilent
+from configs.config import telegramtoken, telegramid, telegramsilent, diagnostics
 #--------telegram
 import telepot
 bot = telepot.Bot(telegramtoken)
@@ -26,4 +26,6 @@ def telegram_send_photo(image_loc):
 def telegram_send_text(text):
     bot.sendMessage(telegramid, text, disable_notification=telegramsilent)
 
-
+def diag(text):
+    if(diagnostics == 'True'):
+        bot.sendMessage(telegramid, 'DIAG: ' + text, disable_notification=telegramsilent)

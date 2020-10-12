@@ -25,7 +25,7 @@ known_face_locs = res[5]
 tempname = ''
 temptimestamp = ''
 
-    
+diag('camera.py: started')
 #---------Proccess photo
 def photoproc(face_locations, output):
     global tempname
@@ -45,15 +45,14 @@ def photoproc(face_locations, output):
             person_id = known_face_ids[best_match_index]
             image_loc = known_face_locs[best_match_index]
         else:
-            unique = uuid.uuid4()
-            name = "Unknown-" + str(unique)
             extrawidth = 0.2*(right - left)
             extraheight = 0.2*(bottom - top)
             face = faces.crop(((left - extrawidth), (top - 3*extraheight), (right + extrawidth), (bottom + extraheight)))
-            image_loc = people_dir + str(unique) + ".JPG"
+            image_loc = people_dir + str(uuid.uuid4()) + ".JPG"
             face.save(image_loc)
             face.close()
-            person_id = db_person_add(name)
+            person_id = db_person_add()
+            name = "Unknown-" + str(person_id)
             db_face_add(person_id, image_loc, face_encoding)
             known_face_ids.append(person_id)
             known_face_names.append(name)
@@ -61,6 +60,7 @@ def photoproc(face_locations, output):
             #announce.append()
             known_face_encoding.append(face_encoding)
             known_face_locs.append(image_loc)
+        diag('camera.py: Person found: ' + str(person_id) + '; '+ name)
 
         #if same name within 9 seconds ignore
         timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")

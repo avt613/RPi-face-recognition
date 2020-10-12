@@ -23,9 +23,9 @@ def dbget():
             encodings[i].append(query[i][str(j)])
     return ids, names, trusted, announce, encodings, locs
     
-def db_person_add(name):
+def db_person_add():
     newid = db.execute("SELECT max(id) AS max FROM people")[0]['max'] + 1
-    db.execute("INSERT INTO people VALUES(?, ?, 'False', ?, '')",newid, name, default_announce)
+    db.execute("INSERT INTO people VALUES(?, ?, 'False', ?, '')",newid, "Unknown-" + str(newid), default_announce)
     link = webaddress + ':' + str(webport) + '/person/' + str(newid)
     telegram_send_photobutton('[New Person] ID: ' + str(newid), link, 'static/temp.JPG')
     return newid

@@ -6,7 +6,7 @@ After=network.target
 User=pi
 WorkingDirectory=/home/pi/RPi-face-recognition
 ExecStart=python3 camera.py
-Restart=never
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

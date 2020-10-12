@@ -2,12 +2,15 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from configs.services import *
 from configs.config import db, webaddress, webport
 import os
+try:
+    from configs.relay import *
+except:
+    print("No module named 'RPi'")
 from configs.telegram import telegram_send_button
-telegram_send_button('System Online', 'Open', webaddress + ':' + str(webport))
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
+telegram_send_button('System Online', 'Open', webaddress + ':' + str(webport))
 # Ensure responses aren't cached
 @app.after_request
 def after_request(response):
@@ -21,6 +24,12 @@ def after_request(response):
 def index_page():
     return render_template("/index.html")
     return redirect("/log")
+
+@app.route("/unlock")
+def unlock():
+    door_open(3)
+    return redirect("/")
+
 #--------------------------------
 @app.route("/settings")
 def settings_page():
@@ -114,7 +123,10 @@ def people_page():
     if not input1:
         input1 = ""
     name = '%' + input1 + '%'
-    people = db.execute("SELECT name, people.id, image_loc FROM people LEFT JOIN faces ON people.id=person_id WHERE name LIKE ? GROUP BY people.id ORDER BY name ASC", name)
+    if name == "%unknown%":
+        people = db.execute("SELECT name, people.id, image_loc FROM people LEFT JOIN faces ON people.id=person_id WHERE name LIKE 'unknown%' GROUP BY people.id ORDER BY people.id DESC")
+    else:
+        people = db.execute("SELECT name, people.id, image_loc FROM people LEFT JOIN faces ON people.id=person_id WHERE name LIKE ? AND name NOT LIKE 'unknown%' GROUP BY people.id ORDER BY name", name)
     return render_template("/people.html", people=people)
 
 @app.route("/people/search/<search>")

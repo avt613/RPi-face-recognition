@@ -3,17 +3,17 @@ from datetime import timedelta, datetime
 from time import sleep
 
 def checkcamera(checkid):
-    for i in range(int(timedelay)):
+    for i in range(2*int(timedelay)):
         last_ids = []
         times = ""
-        for i in range(int(timedelay)):
-            if i > 0:
+        for j in range(int(timedelay)):
+            if j > 0:
                 times = times + ", "
-            times = times + "'" + (datetime.now() - timedelta(seconds=i)).strftime("%Y-%m-%d %H:%M:%S") + "'"
+            times = times + "'" + (datetime.now() - timedelta(seconds=j)).strftime("%Y-%m-%d %H:%M:%S") + "'"
         query = db.execute("SELECT person_id FROM log WHERE datetime IN(" + times + ") GROUP BY person_id ORDER BY datetime DESC")
         for person in query:
             last_ids.append(int(person['person_id']))
         if int(checkid) in last_ids:
             return True
-        sleep(0.5)          
+        sleep(0.25)
     return False
