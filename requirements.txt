@@ -27,11 +27,10 @@ multidict==4.7.6
 numpy==1.19.1
 picamera==1.13
 Pillow==7.2.0
-pip-tools==5.3.1
 pycrypto==2.6.1
 PyGObject==3.30.4
 python-apt==1.8.4.1
-pyxdg==0.25
+pyxdg==0.27
 requests==2.21.0
 RPi.GPIO==0.7.0
 SecretStorage==2.3.1
@@ -42,7 +41,7 @@ ssh-import-id==5.7
 telepot==12.7
 termcolor==1.1.0
 typing-extensions==3.7.4.2
-urllib3==1.24.1
+urllib3==1.25.11
 virtualenv==20.0.30
 Werkzeug==1.0.1
 yarl==1.5.1
