@@ -6,7 +6,7 @@ attrs==19.3.0
 certifi==2018.8.24
 chardet==3.0.4
 click==7.1.2
-cryptography==2.6.1
+cryptography==3.2
 cs50==5.0.4
 distlib==0.3.1
 dlib==19.20.0
