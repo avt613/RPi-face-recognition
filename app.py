@@ -5,12 +5,12 @@ import os
 try:
     from configs.relay import *
 except:
-    print("No module named 'RPi'")
-from configs.telegram import telegram_send_button
+    server.log.info("No module named 'RPi'")
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-telegram_send_button('System Online', 'Open', webaddress + ':' + str(webport))
+
+    
 # Ensure responses aren't cached
 @app.after_request
 def after_request(response):
