@@ -1,0 +1,6 @@
+delete from faces where person_id not in (1,2,30);
+delete from log where person_id not in (1,2,30);
+delete from people where id not in (1,2,30);
+UPDATE settings SET value="123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ" WHERE name="telegramtoken";
+UPDATE settings SET value="123456789" WHERE name="telegramid";
+UPDATE settings SET value="123123" WHERE name="masterpin";
