@@ -63,17 +63,18 @@ def photoproc(face_locations, output):
         diag('camera.py: Person found: ' + str(person_id) + '; '+ name)
 
         #if same name within 9 seconds ignore
-        timestamp = (datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now()
         recent = set()
         for i in range(int(timedelay)):
-            recent.add((datetime.now() - timedelta(seconds=i)).strftime("%Y-%m-%d %H:%M:%S"))
-        if not (temptimestamp in recent and tempname == name) and televeryperson == 'True':
-            link = webaddress + ':' + str(webport) + '/person/' + str(person_id)
-            telegram_send_button('ID: ' + str(person_id) + '\n' + 'NAME: ' + name, 'Open', link)
+            recent.add((datetime.now() - timedelta(seconds=i)))
+        if not (temptimestamp in recent):
+            if tempname != name and televeryperson == 'True':
+                link = webaddress + ':' + str(webport) + '/person/' + str(person_id)
+                telegram_send_button('ID: ' + str(person_id) + '\n' + 'NAME: ' + name, 'Open', link)
+            db.execute('INSERT INTO log ("person_id", "datetime", "distance") VALUES(?, ?, ?)',person_id, timestamp, float(face_distances[best_match_index]))
         temptimestamp = timestamp
         tempname = name
 
-        db.execute('INSERT INTO log ("person_id", "datetime", "distance") VALUES(?, ?, ?)',person_id, timestamp, float(face_distances[best_match_index]))
         print(name, timestamp, float(face_distances[best_match_index]))
 
 
