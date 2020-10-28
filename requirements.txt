@@ -4,12 +4,13 @@ asn1crypto==0.24.0
 async-timeout==3.0.1
 attrs==19.3.0
 certifi==2018.8.24
+cffi==1.14.3
 chardet==3.0.4
 click==7.1.2
-cryptography==2.6.1
-cs50==5.0.4
+cryptography==3.2.1
+cs50==5.1.0
 distlib==0.3.1
-dlib==19.20.0
+dlib==19.21.0
 entrypoints==0.3
 face-recognition==1.3.0
 face-recognition-models==0.3.0
@@ -24,9 +25,10 @@ keyring==17.1.1
 keyrings.alt==3.1.1
 MarkupSafe==1.1.1
 multidict==4.7.6
-numpy==1.19.1
+numpy==1.19.2
 picamera==1.13
-Pillow==7.2.0
+Pillow==8.0.1
+pycparser==2.20
 pycrypto==2.6.1
 PyGObject==3.30.4
 python-apt==1.8.4.1
@@ -45,4 +47,3 @@ urllib3==1.25.11
 virtualenv==20.0.30
 Werkzeug==1.0.1
 yarl==1.5.1
-zipp==3.1.0
