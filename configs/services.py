@@ -1,5 +1,5 @@
 import os
-services_list = ['camera', 'gunicorn', 'keypad', 'fan', 'live']
+services_list = ['camera', 'keypad', 'fan', 'live', 'gunicorn']
 def restart_service(name):
     #print('sudo systemctl restart ' + name + '.service')
     return os.system('sudo systemctl restart ' + name + '.service')
