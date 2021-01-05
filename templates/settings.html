@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>RPi facerec</title>
+    <link rel="icon" type="image/svg+xml" sizes="255x255" href="{{url_for('static', filename='assets/img/icon.svg')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.min.css') }}">
 </head>
@@ -108,7 +109,7 @@
                     <div class="form-row">
                         <div class="col-auto"><input class="form-control" type="text" name="name" placeholder="name"></div>
                         <div class="col-auto"><input class="form-control" type="text" name="value" placeholder="value"></div>
-                        <div class="col-auto"><input class="form-control" type="text" name="notes" placeholder="value"></div>
+                        <div class="col-auto"><input class="form-control" type="text" name="notes" placeholder="Description"></div>
                         <div class="col-auto"><button class="btn btn-primary" type="submit">Add</button></div>
                     </div>
                 </form>

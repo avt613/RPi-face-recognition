@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>RPi facerec</title>
+    <link rel="icon" type="image/svg+xml" sizes="255x255" href="{{url_for('static', filename='assets/img/icon.svg')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.min.css') }}">
 </head>
@@ -25,8 +26,23 @@
             </div>
         </div>
     </nav>
-    <div class="container text-center"><img src="static/temp.JPG"></div>
-    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+	{% if service_active('live') %}
+		<div class="container text-center">
+			<form action="/settings/restart/camera" method="post">
+				<button class="btn btn-success" type="submit">Start Facial Recognition</button>
+			</form>
+			<img src="http://192.168.1.38/stream.mjpg" style="width:100%; max-width:640px;">
+		</div>
+
+	{% else %}
+		<div class="container text-center">
+			<form action="/settings/restart/live" method="post">
+				<button class="btn btn-success" type="submit">Start Live View</button>
+			</form>
+			<img src="static/temp.JPG">
+		</div>
+	{% endif %}
+	<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
 </body>
 

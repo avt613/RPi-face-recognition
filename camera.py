@@ -7,6 +7,7 @@ from configs.telegram import *
 from PIL import Image, ImageDraw
 from datetime import timedelta, datetime
 import uuid
+import base64
 
 camera = picamera.PiCamera()
 camera.rotation = rotation
@@ -51,6 +52,10 @@ def photoproc(face_locations, output):
             image_loc = people_dir + str(uuid.uuid4()) + ".JPG"
             face.save(image_loc)
             face.close()
+            #convert to base64 before saving to db
+            with open(os.path.join(image_loc, file), "rb") as img_file:
+                image_loc = "data:image/png;base64," + base64.b64encode(img_file.read()).decode('utf-8')
+            
             person_id = db_person_add()
             name = "Unknown-" + str(person_id)
             db_face_add(person_id, image_loc, face_encoding)

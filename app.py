@@ -6,7 +6,6 @@ try:
     from configs.relay import *
 except:
     server.log.info("No module named 'RPi'")
-
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -22,8 +21,8 @@ def after_request(response):
 #--------------------------------
 @app.route("/")
 def index_page():
-    return render_template("/index.html")
-    return redirect("/log")
+    return render_template("/index.html", service_active=service_active)
+    #return redirect("/log")
 
 @app.route("/unlock")
 def unlock():
@@ -80,8 +79,12 @@ def settings_restart(service):
     else:
         if service == 'camera':
             stop_service('live')
+            restart_service(service)
+            return redirect("/")
         elif service == 'live':
             stop_service('camera')
+            restart_service(service)
+            return redirect("/")
         restart_service(service)
     return redirect("/settings")
 
@@ -124,7 +127,7 @@ def people_page():
         input1 = ""
     name = '%' + input1 + '%'
     if name == "%unknown%":
-        people = db.execute("SELECT name, people.id, image_loc FROM people LEFT JOIN faces ON people.id=person_id WHERE name LIKE 'unknown%' GROUP BY people.id ORDER BY people.id DESC")
+        people = db.execute("SELECT name, people.id, image_loc FROM people LEFT JOIN faces ON people.id=person_id WHERE name LIKE 'unknown%' GROUP BY people.id ORDER BY people.id")
     else:
         people = db.execute("SELECT name, people.id, image_loc FROM people LEFT JOIN faces ON people.id=person_id WHERE name LIKE ? AND name NOT LIKE 'unknown%' GROUP BY people.id ORDER BY name", name)
     return render_template("/people.html", people=people)
