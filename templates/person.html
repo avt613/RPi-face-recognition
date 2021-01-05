@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>RPi facerec</title>
+    <link rel="icon" type="image/svg+xml" sizes="255x255" href="{{url_for('static', filename='assets/img/icon.svg')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.min.css') }}">
 </head>
@@ -35,9 +36,9 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="row">
+                    <div class="row" style="overflow:auto;flex-wrap: nowrap;">
                         {% for row in person %}
-                            <div class="col"><img class="mug" src="/{{ row['image_loc'] }}">
+                            <div class="col" style="min-width:200px"><img class="mug" src="{{ row['image_loc'] }}">
                             {% if person[1] %}
                             <p><button class="btn btn-danger" type="submit" formaction="/person/deleteface" name="face" value="{{ row['image_loc'] }}">Delete</button></p>
                             {% endif %}

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>RPi facerec</title>
+    <link rel="icon" type="image/svg+xml" sizes="255x255" href="{{url_for('static', filename='assets/img/icon.svg')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.min.css') }}">
 </head>
@@ -44,7 +45,7 @@
         <div class="row row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-5 row-cols-xl-5">
             {% for row in people %}
             <div class="col" onclick="window.location='/person/{{ row['id'] }}'">
-                <p>{{ row['name'] }}</p><img class="mugicon" src="/{{ row['image_loc'] }}"></div>
+                <p>{{ row['name'] }}</p><img class="mugicon" src="{{ row['image_loc'] }}"></div>
             {% endfor %}
         </div>
     </div>
