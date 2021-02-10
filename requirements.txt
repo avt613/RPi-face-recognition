@@ -7,7 +7,7 @@ certifi==2018.8.24
 cffi==1.14.3
 chardet==3.0.4
 click==7.1.2
-cryptography==3.2.1
+cryptography==3.3.2
 cs50==5.1.0
 distlib==0.3.1
 dlib==19.21.0
