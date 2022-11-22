@@ -27,7 +27,7 @@ MarkupSafe==1.1.1
 multidict==4.7.6
 numpy==1.19.2
 picamera==1.13
-Pillow==8.0.1
+Pillow==9.3.0
 pycparser==2.20
 pycrypto==2.6.1
 PyGObject==3.30.4
